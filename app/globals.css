@@ -1,26 +1,607 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+* {
+  font-family: inter;
+}
+.bg-bank-gradient {
+  background-color: #0179fe;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.profile-banner {
+  @apply h-[120px] w-full  bg-cover bg-no-repeat;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.sidebar-link {
+  @apply flex gap-3 items-center py-1 md:p-3 2xl:p-4 rounded-lg justify-center xl:justify-start;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}
+@utility auth-asset {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  align-items: center;
+  justify-content: flex-end;
+}
+/* Auth Form */
+@utility auth-form {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 420px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem; /* gap-5 */
+  padding-top: 2.5rem; /* py-10 */
+  padding-bottom: 2.5rem;
+  margin-left: 5rem;
+}
+
+/* md:gap-8 → handled in HTML (utility classes cannot include breakpoints) */
+
+/* Form Item */
+@utility form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem; /* gap-1.5 */
+}
+
+/* Form Label */
+@utility form-label {
+  font-size: 14px;
+  line-height: 20px;
+  width: 100%;
+  max-width: 280px;
+  font-weight: 500;
+  color: rgb(var(--gray-700));
+}
+
+/* Form Message */
+@utility form-message {
+  font-size: 12px;
+  line-height: 16px;
+  color: rgb(var(--red-500));
+}
+
+/* Form Button */
+@utility form-btn {
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 0.5rem;
+  border: 1px solid var(--bankGradient);
+  background: var(--bank-gradient);
+  font-weight: 600;
+  color: white;
+  box-shadow: var(--shadow-form);
+}
+
+/* Form Link */
+@utility form-link {
+  font-size: 14px;
+  line-height: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--bankGradient);
+}
+/* Home */
+@utility home {
+  overflow-y: auto;
+  scrollbar-width: none; /* no-scrollbar */
+  -ms-overflow-style: none;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+
+/* Hide scrollbar for webkit browsers */
+
+/* Note: Use max-xl:max-h-screen and max-xl:overflow-y-scroll in HTML for breakpoints */
+
+/* Home Content */
+@utility home-content {
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  display: flex;
+  width: 100%;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: 2rem; /* gap-8 */
+  padding-left: 1.25rem; /* px-5 */
+  padding-right: 1.25rem;
+  padding-top: 1.75rem; /* py-7 */
+  padding-bottom: 1.75rem;
+}
+
+/* Hide scrollbar for webkit browsers */
+
+/* Home Header */
+@utility home-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem; /* gap-8 */
+}
+
+/* Base right-sidebar styles */
+@utility right-sidebar {
+  display: none;
+  height: 100vh;
+  max-height: 100vh;
+  flex-direction: column;
+  border-left-width: 1px;
+  border-color: rgb(229 231 235); /* gray-200 */
+  width: 355px;
+  overflow-y: auto;
+}
+
+/* Show and scroll only on xl screens */
+@media (min-width: 1280px) {
+  .right-sidebar {
+    display: flex;
+    overflow-y: scroll;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Hide scrollbar */
+.right-sidebar::-webkit-scrollbar {
+  display: none;
+}
+.right-sidebar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@utility profile-banner {
+  height: 120px;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: var(--bg-gradient-mesh);
+}
+
+@utility profile {
+  position: relative;
+  display: flex;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Center profile on smaller screens */
+@media (max-width: 1279px) {
+  .profile {
+    justify-content: center;
+  }
+}
+
+@utility profile-img {
+  position: absolute;
+  top: -2rem;
+  width: 6rem;
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: rgb(243 244 246); /* gray-100 */
+  border-width: 8px;
+  border-color: white;
+  padding: 0.5rem;
+  box-shadow: var(--shadow-profile);
+}
+
+@utility profile-details {
+  display: flex;
+  flex-direction: column;
+  padding-top: 6rem;
+}
+
+@utility profile-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgb(17 24 39); /* gray-900 */
+}
+
+@utility profile-email {
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgb(75 85 99); /* gray-600 */
+}
+
+@utility text-10 {
+  font-size: 10px;
+  line-height: 14px;
+}
+
+@utility text-12 {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+@utility text-14 {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+@utility text-16 {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@utility text-18 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+@utility text-20 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+@utility text-24 {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+@utility text-26 {
+  font-size: 26px;
+  line-height: 32px;
+}
+
+@utility text-30 {
+  font-size: 30px;
+  line-height: 38px;
+}
+
+@utility text-36 {
+  font-size: 36px;
+  line-height: 44px;
+}
+
+@utility bank-card {
+  position: relative;
+  display: flex;
+  height: 190px;
+  width: 100%;
+  max-width: 320px;
+  justify-content: space-between;
+  border-radius: 20px;
+  border-width: 1px;
+  border-color: white;
+  backdrop-filter: blur(6px);
+}
+
+@utility bank-card_content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  max-width: 228px;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding-left: 1.25rem; /* px-5 */
+  padding-right: 1.25rem; /* px-5 */
+  padding-top: 1.25rem; /* pt-5 */
+  padding-bottom: 1rem; /* pb-4 */
+}
+@utility bank-card_icon {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding-top: 1.25rem; /* py-5 */
+  padding-bottom: 1.25rem;
+  padding-right: 1.25rem; /* pr-5 */
+}
+@utility bank-info {
+  display: flex;
+  gap: 18px;
+  padding: 1rem; /* p-4 */
+  border-width: 1px;
+  transition: all 0.2s;
+}
+/* FOOTER */
+@utility footer {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem; /* gap-2 */
+  padding-top: 1.5rem; /* py-6 */
+  padding-bottom: 1.5rem;
+}
+
+@utility footer_name {
+  display: flex;
+  width: 2.5rem; /* size-10 */
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px; /* rounded-full */
+  background-color: rgb(229 231 235); /* bg-gray-200 */
+}
+
+@utility footer_email {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@utility footer_name-mobile {
+  display: flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: rgb(229 231 235);
+}
+
+@utility footer_email-mobile {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@utility footer_image {
+  position: relative;
+  width: 1.25rem; /* size-5 */
+  height: 1.25rem;
+}
+/* BANK TAB */
+@utility banktab-item {
+  display: flex;
+  gap: 18px;
+  border-bottom-width: 2px;
+  padding-top: 0.5rem; /* py-2 */
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem; /* px-2 */
+  padding-right: 0.5rem;
+
+  /* Responsive (sm:px-4) */
+  @media (min-width: 640px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  transition-property: all;
+}
+
+/* RECENT TRANSACTIONS */
+@utility recent-transactions {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 1.5rem; /* gap-6 */
+}
+@utility view-all-btn {
+  font-size: 0.875rem; /* text-14 ≈ 14px */
+  border-radius: 0.5rem; /* rounded-lg */
+  border-width: 1px;
+  border-color: rgb(209 213 219); /* border-gray-300 */
+  padding-left: 1rem; /* px-4 */
+  padding-right: 1rem;
+  padding-top: 0.625rem; /* py-2.5 */
+  padding-bottom: 0.625rem;
+  font-weight: 600; /* font-semibold */
+  color: rgb(55 65 81); /* text-gray-700 */
+}
+
+@utility recent-transactions-label {
+  font-weight: 600; /* font-semibold */
+  font-size: 1.25rem; /* text-20 ≈ 20px */
+  color: rgb(17 24 39); /* text-gray-900 */
+
+  @media (min-width: 768px) {
+    font-size: 1.5rem; /* md:text-24 ≈ 24px */
+  }
+}
+
+@utility recent-transactions-tablist {
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap;
+  margin-bottom: 2rem; /* mb-8 */
+  /* If you had a custom scrollbar class, you can include its CSS here too */
+}
+
+/* BANK-INFO */
+@utility bank-info_content {
+  display: flex;
+  flex: 1 1 0%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem; /* gap-2 */
+  overflow: hidden;
+}
+
+/* PAYMENT TRANSFER */
+@utility payment-transfer {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding: 2rem; /* p-8 */
+  background-color: var(--gray-25);
+}
+@utility payment-transfer_form-item {
+  display: flex;
+  width: 100%;
+  max-width: 850px;
+  flex-direction: column;
+  gap: 0.75rem; /* gap-3 */
+}
+@utility payment-transfer_form-content {
+  display: flex;
+  width: 100%;
+  max-width: 280px;
+  flex-direction: column;
+  gap: 0.5rem; /* gap-2 */
+}
+@utility payment-transfer_form-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; /* gap-1 */
+  border-top-width: 1px;
+  border-color: var(--gray-200);
+  padding-bottom: 1.25rem; /* pb-5 */
+  padding-top: 1.5rem; /* pt-6 */
+}
+@utility payment-transfer_btn-box {
+  margin-top: 1.25rem; /* mt-5 */
+  display: flex;
+  width: 100%;
+  max-width: 850px;
+  gap: 0.75rem; /* gap-3 */
+  border-color: var(--gray-200);
+  padding-top: 1.25rem; /* py-5 */
+  padding-bottom: 1.25rem;
+}
+@utility payment-transfer_btn {
+  font-size: 0.875rem; /* text-14 */
+  width: 100%;
+  background: var(--bank-gradient);
+  font-weight: 600; /* font-semibold */
+  color: white;
+  box-shadow: var(--shadow-form);
+}
+/* TRANSACTION TABLE */
+.hover-bg-transparent:hover {
+  background-color: transparent !important;
+}
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
