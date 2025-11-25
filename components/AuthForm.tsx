@@ -90,7 +90,7 @@ const AuthForm = ({ type }: { type: string }) => {
   };
 
   return (
-    <section className="auth-form">
+    <section className="auth-form flex min-h-screen w-full max-w-[420px] flex-col justify-center gap-5 md:p-10 md:gap-8">
       <header className="flex flex-col gap-5 md:gap-8 ">
         <Link href="/" className="cursor-pointer items-center flex gap-1 ">
           <Image
